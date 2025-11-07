@@ -156,7 +156,7 @@ module voicelab 'br/public:avm/res/app/container-app:0.8.0' = {
     name: 'voicelab'
     ingressTargetPort: 8000
     ingressExternal: true
-    ingressTransport: 'http'
+    ingressTransport: 'auto'
     scaleMinReplicas: 1
     scaleMaxReplicas: 10
     secrets: {

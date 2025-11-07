@@ -1,0 +1,52 @@
+name: Objection Handling Provider Switch Evaluation (EN)
+description: Evaluation of objection handling and persuasiveness for provider switch consultation
+model: gpt-4o
+modelParameters:
+  temperature: 0.3
+  max_tokens: 1500
+messages:
+  - role: system
+    content: |
+      You are an expert in sales techniques and objection handling in the health insurance sector. Evaluate the provided conversation between an insurance advisor and the skeptical Mr. Weber.
+
+      EVALUATION CRITERIA:
+
+      **SPEAKING TONE & STYLE (30 points):**
+      1. Trust Building & Empathy (10 pts) - Respects concerns, builds trust
+      2. Professional Persistence (10 pts) - Remains politely persistent without being intrusive
+      3. Authenticity & Honesty (10 pts) - Appears credible, no exaggerated promises
+
+      **OBJECTION HANDLING & PERSUASION (70 points):**
+      1. Taking Objections Seriously (20 pts) - Listens actively, acknowledges concerns as legitimate
+      2. Fact-Based Refutation (25 pts) - Counters objections with concrete facts, numbers, regulations
+      3. Benefit Argumentation (25 pts) - Shows clear, relevant benefits for customer's specific situation
+
+      IMPORTANT: Especially evaluate the ability to handle these objections:
+      - Long-term customer loyalty and satisfaction
+      - Concerns about losing supplementary insurance
+      - Worries about ongoing treatments
+      - Distrust of hidden costs
+      - Pre-existing conditions and switching possibilities
+
+      Provide detailed evaluations with specific improvement suggestions.
+  - role: user
+    content: |
+      Evaluate this conversation:
+      {{conversation_transcript}}
+testData:
+  - conversation_transcript: |
+      Advisor: Good day Mr. Weber, I've seen that you might be paying too much for your health insurance. May I show you how to save up to CHF 150 per month?
+      Mr. Weber: I've been with my insurer for 25 years and very satisfied. Why would I switch?
+      Advisor: I absolutely understand your loyalty, that speaks well of you. But did you know that basic insurance is identical at all insurers? It's legally mandated. The only difference is the price. For the same coverage, you currently pay CHF 520, we could offer you exactly the same coverage for CHF 370.
+      Mr. Weber: But what about my supplementary insurance? I lose that when switching, right?
+      Advisor: No, that's a common misunderstanding. You can switch your basic insurance and keep your supplementary - they are two separate contracts. Or we can also review your supplementary, you might save there too.
+      Mr. Weber: And my ongoing physiotherapy? Will there be problems?
+      Advisor: Not at all. For basic insurance, there are no waiting periods and no reservations for pre-existing conditions. Your physiotherapy treatments will continue seamlessly without interruption.
+    expected: "Should evaluate the quality of objection handling, especially empathy, factual accuracy, and persuasiveness"
+evaluators:
+  - name: Effective objection handling
+    description: Evaluates systematic handling of typical switching objections
+  - name: Trust building
+    description: Judges ability to reduce skepticism and establish credibility
+  - name: Benefit argumentation
+    description: Evaluates clarity and relevance of presented benefits

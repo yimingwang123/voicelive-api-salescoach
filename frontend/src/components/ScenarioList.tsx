@@ -4,17 +4,18 @@
  *--------------------------------------------------------------------------------------------*/
 
 import {
+  Button,
   Card,
-  CardHeader,
+  Spinner,
+  Tab,
+  TabList,
   Text,
   makeStyles,
   tokens,
-  Button,
-  Spinner,
 } from '@fluentui/react-components'
-import { Scenario } from '../types'
 import { useState } from 'react'
 import { api } from '../services/api'
+import { Scenario } from '../types'
 
 const useStyles = makeStyles({
   container: {
@@ -22,36 +23,66 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     gap: tokens.spacingVerticalM,
     width: '100%',
+    padding: tokens.spacingVerticalL,
   },
   header: {
-    gridColumn: '1 / -1',
+    fontSize: '22px',
+    fontWeight: tokens.fontWeightSemibold,
+    marginBottom: tokens.spacingVerticalS,
+    color: tokens.colorNeutralForeground1,
   },
-  cardsGrid: {
+  tabList: {
+    marginBottom: tokens.spacingVerticalS,
+  },
+  gridContainer: {
     display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gap: tokens.spacingVerticalM,
-    gridColumn: '1 / span 2',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+    gap: tokens.spacingHorizontalM,
     width: '100%',
-    '@media (max-width: 600px)': {
+    '@media (max-width: 768px)': {
       gridTemplateColumns: '1fr',
+      gap: tokens.spacingHorizontalM,
     },
   },
   card: {
     cursor: 'pointer',
-    transition: 'all 0.2s',
+    transition: 'all 0.2s ease-in-out',
+    minHeight: '120px',
+    padding: tokens.spacingVerticalM,
+    border: `1px solid ${tokens.colorNeutralStroke1}`,
+    borderRadius: tokens.borderRadiusLarge,
     '&:hover': {
-      transform: 'translateY(-2px)',
+      transform: 'translateY(-4px)',
       boxShadow: tokens.shadow16,
+      border: `1px solid ${tokens.colorBrandBackground}`,
     },
   },
   selected: {
     backgroundColor: tokens.colorBrandBackground2,
+    border: `2px solid ${tokens.colorBrandBackground}`,
+  },
+  cardTitle: {
+    fontSize: '14px',
+    fontWeight: tokens.fontWeightSemibold,
+    marginBottom: tokens.spacingVerticalXS,
+    color: tokens.colorNeutralForeground1,
+    lineHeight: '20px',
+  },
+  cardDescription: {
+    fontSize: '12px',
+    color: tokens.colorNeutralForeground2,
+    lineHeight: '16px',
+    display: '-webkit-box',
+    WebkitLineClamp: '2',
+    WebkitBoxOrient: 'vertical',
+    overflow: 'hidden',
   },
   actions: {
-    gridColumn: '1 / -1',
     display: 'flex',
     justifyContent: 'flex-end',
-    marginTop: tokens.spacingVerticalL,
+    marginTop: tokens.spacingVerticalM,
+    paddingTop: tokens.spacingVerticalM,
+    borderTop: `1px solid ${tokens.colorNeutralStroke2}`,
   },
   loadingCard: {
     display: 'flex',
@@ -60,11 +91,15 @@ const useStyles = makeStyles({
     justifyContent: 'center',
     minHeight: '120px',
     textAlign: 'center',
-    gap: tokens.spacingVerticalM,
+    gap: tokens.spacingVerticalS,
+    padding: tokens.spacingVerticalM,
+    border: `1px dashed ${tokens.colorNeutralStroke2}`,
+    borderRadius: tokens.borderRadiusLarge,
   },
-  graphIcon: {
-    fontSize: '24px',
-    marginRight: tokens.spacingHorizontalS,
+  emptyState: {
+    textAlign: 'center',
+    padding: tokens.spacingVerticalL,
+    color: tokens.colorNeutralForeground3,
   },
 })
 
@@ -88,6 +123,7 @@ export function ScenarioList({
   const [generatedScenario, setGeneratedScenario] = useState<Scenario | null>(
     null
   )
+  const [selectedTab, setSelectedTab] = useState<string>('german')
 
   const handleScenarioClick = async (scenario: Scenario) => {
     if (scenario.is_graph_scenario && !scenario.generated_from_graph) {
@@ -112,70 +148,114 @@ export function ScenarioList({
     }
   }
 
-  // Build the complete scenario list
-  const allScenarios = generatedScenario
-    ? [...scenarios.filter(s => !s.is_graph_scenario), generatedScenario]
-    : scenarios
+  // Group scenarios by language
+  const germanScenarios = scenarios.filter(s =>
+    !s.is_graph_scenario && s.name.includes('(DE)')
+  )
+  const frenchScenarios = scenarios.filter(s =>
+    !s.is_graph_scenario && s.name.includes('(FR)')
+  )
+  const englishScenarios = scenarios.filter(s =>
+    !s.is_graph_scenario && s.name.includes('(EN)')
+  )
+  const graphScenario = generatedScenario || scenarios.find(s => s.is_graph_scenario)
+
+  const renderScenarioCard = (scenario: Scenario) => {
+    const isSelected = selectedScenario === scenario.id
+    const isGraphLoading =
+      scenario.is_graph_scenario &&
+      loadingGraph &&
+      !scenario.generated_from_graph
+
+    if (isGraphLoading) {
+      return (
+        <Card key="graph-loading" className={styles.card}>
+          <div className={styles.loadingCard}>
+            <Spinner size="medium" />
+            <Text size={300}>
+              Analyzing your calendar and generating personalized scenario...
+            </Text>
+          </div>
+        </Card>
+      )
+    }
+
+    return (
+      <Card
+        key={scenario.id}
+        className={`${styles.card} ${isSelected ? styles.selected : ''}`}
+        onClick={() => handleScenarioClick(scenario)}
+      >
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <Text className={styles.cardTitle}>
+            {scenario.name}
+          </Text>
+          <Text className={styles.cardDescription}>
+            {scenario.description}
+          </Text>
+        </div>
+      </Card>
+    )
+  }
+
+  const getCurrentScenarios = () => {
+    switch (selectedTab) {
+      case 'german':
+        return germanScenarios
+      case 'french':
+        return frenchScenarios
+      case 'english':
+        return englishScenarios
+      case 'personalized':
+        return graphScenario ? [graphScenario] : []
+      default:
+        return []
+    }
+  }
+
+  const currentScenarios = getCurrentScenarios()
 
   return (
-    <>
-      <Text className={styles.header} size={500} weight="semibold">
+    <div className={styles.container}>
+      <Text className={styles.header}>
         Select Training Scenario
       </Text>
-      <div className={styles.cardsGrid}>
-        {allScenarios.map(scenario => {
-          const isSelected = selectedScenario === scenario.id
-          const isGraphLoading =
-            scenario.is_graph_scenario &&
-            loadingGraph &&
-            !scenario.generated_from_graph
+      <Text size={200} style={{ marginBottom: '8px', color: tokens.colorNeutralForeground3 }}>
+        You are the Swiss health insurance seller. Practice your sales skills with AI-powered customers.
+      </Text>
 
-          if (isGraphLoading) {
-            return (
-              <Card key="graph-loading" className={styles.card}>
-                <div className={styles.loadingCard}>
-                  <Spinner size="medium" />
-                  <Text size={300}>
-                    Analyzing your calendar and generating personalized
-                    scenario...
-                  </Text>
-                </div>
-              </Card>
-            )
-          }
+      <TabList
+        selectedValue={selectedTab}
+        onTabSelect={(_, data) => setSelectedTab(data.value as string)}
+        className={styles.tabList}
+        size="medium"
+      >
+        <Tab value="german">German ({germanScenarios.length})</Tab>
+        <Tab value="french">French ({frenchScenarios.length})</Tab>
+        <Tab value="english">English ({englishScenarios.length})</Tab>
+        <Tab value="personalized">Personalized</Tab>
+      </TabList>
 
-          return (
-            <Card
-              key={scenario.id}
-              className={`${styles.card} ${isSelected ? styles.selected : ''}`}
-              onClick={() => handleScenarioClick(scenario)}
-            >
-              <CardHeader
-                header={
-                  <Text weight="semibold">
-                    {(scenario.is_graph_scenario ||
-                      scenario.generated_from_graph) && (
-                      <span className={styles.graphIcon}>✨</span>
-                    )}
-                    {scenario.name}
-                  </Text>
-                }
-                description={<Text size={200}>{scenario.description}</Text>}
-              />
-            </Card>
-          )
-        })}
+      <div className={styles.gridContainer}>
+        {currentScenarios.length > 0 ? (
+          currentScenarios.map(renderScenarioCard)
+        ) : (
+          <div className={styles.emptyState}>
+            <Text size={400}>No scenarios available</Text>
+          </div>
+        )}
       </div>
+
       <div className={styles.actions}>
         <Button
           appearance="primary"
           disabled={!selectedScenario || loadingGraph}
           onClick={onStart}
-          size="large"
+          size="medium"
         >
           Start Training
         </Button>
       </div>
-    </>
+    </div>
   )
 }

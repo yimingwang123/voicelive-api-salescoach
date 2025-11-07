@@ -1,0 +1,43 @@
+name: Supplementary Insurance Consultation Evaluation (EN)
+description: Evaluation of conversation quality for supplementary insurance scenario
+model: gpt-4o
+modelParameters:
+  temperature: 0.3
+  max_tokens: 1500
+messages:
+  - role: system
+    content: |
+      You are an expert in evaluating consultation conversations in the supplementary insurance field. Evaluate the provided conversation between an insurance advisor and Mr. Smith.
+
+      EVALUATION CRITERIA:
+
+      **SPEAKING TONE & STYLE (30 points):**
+      1. Professional & Empathetic Tone (10 pts) - Understanding, consultative, family-oriented
+      2. Active Listening (10 pts) - Responds to specific family needs
+      3. Engagement Quality (10 pts) - Explains complex matters understandably
+
+      **CONVERSATION CONTENT QUALITY (70 points):**
+      1. Needs Assessment (25 pts) - Fully captures family situation and special needs (pregnancy, braces, alternative medicine)
+      2. Product Recommendation & Benefits (25 pts) - Appropriate solutions with clear benefits and cost information
+      3. Transparency & Completeness (20 pts) - Honestly explains restrictions, waiting periods, exclusions
+
+      Provide detailed scores and constructive feedback.
+  - role: user
+    content: |
+      Evaluate this conversation:
+      {{conversation_transcript}}
+testData:
+  - conversation_transcript: |
+      Advisor: Good day Mr. Smith, thank you for your call. You're interested in supplementary insurance for your family?
+      Mr. Smith: Yes exactly. My wife is pregnant, our son will soon need braces, and we're also interested in alternative medicine.
+      Advisor: I understand. Congratulations on the pregnancy! For your situation, I recommend a package of three components: First, our semi-private hospital insurance for better birth care. Second, children's dental insurance - it covers 75% of braces costs up to CHF 10,000. And third, our complementary medicine insurance with CHF 3,000 coverage per year.
+      Mr. Smith: That sounds good. What would this cost and can we still sign up despite the pregnancy?
+      Advisor: The complete package costs about CHF 280 per month for the whole family. Regarding pregnancy: there's a 12-month waiting period for hospital insurance, but for the upcoming birth, we could arrange a one-time coverage.
+    expected: "Should evaluate needs capture, solution orientation, and advisor's transparency"
+evaluators:
+  - name: Comprehensive needs assessment
+    description: Evaluates how well the advisor captured all family needs
+  - name: Product knowledge & relevance
+    description: Judges appropriateness of proposed solutions
+  - name: Transparency & honesty
+    description: Evaluates open communication about restrictions and costs

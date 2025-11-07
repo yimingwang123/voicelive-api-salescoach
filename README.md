@@ -32,11 +32,11 @@ urlFragment: voicelive-api-salescoach
 
 ## Overview
 
-Voice Live API Salescoach is a demo application showcasing how AI-based training could be used in sales education using Azure AI services. Practice real-world sales scenarios with AI-powered virtual customers, receive instant feedback on your performance, and improve your sales skills through immersive voice conversations.
+Voice Live API Salescoach is a demo application showcasing how AI-based training could be used in sales education using Azure AI services. **You play the role of a Swiss health insurance seller**, practicing real-world sales scenarios with AI-powered virtual customers. Receive instant feedback on your performance and improve your sales skills through immersive voice conversations.
 
 ### Features
 
-- **Real-time Voice Conversations** - Practice sales calls with AI agents that respond naturally using Azure Voice Live API
+- **Real-time Voice Conversations** - Practice sales calls with AI customers that respond naturally using Azure Voice Live API
 - **Performance Analysis** - Get detailed feedback on your conversation skills
 - **Pronunciation Assessment** - Improve your speaking clarity and confidence with Azure Speech Services
 - **Scoring System** - Track your progress with metrics
@@ -51,10 +51,10 @@ https://github.com/user-attachments/assets/904f1555-6981-4780-ae64-c5757337bcad
 
 ### How It Works
 
-1. **Choose a Scenario** - Select from various industry-specific sales situations
-2. **Start the Conversation** - Click the microphone to start your simulation
-3. **Engage with AI** - The virtual customer responds realistically based on the scenario
-4. **Receive Feedback** - Get instant analysis on your performance including:
+1. **Choose a Scenario** - Select from various Swiss health insurance sales situations
+2. **Start the Conversation** - Click the microphone to start your simulation (you are the seller)
+3. **Engage with AI Customer** - The virtual customer responds realistically based on the scenario
+4. **Receive Feedback** - Get instant analysis on your sales performance including:
    - Speaking tone and style
    - Content quality
    - Needs assessment

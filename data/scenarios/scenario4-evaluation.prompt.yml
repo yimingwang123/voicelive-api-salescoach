@@ -1,0 +1,43 @@
+name: Évaluation conversation conseil assurance maladie (FR)
+description: Évaluation de la qualité de la conversation pour le scénario de conseil primes
+model: gpt-4o
+modelParameters:
+  temperature: 0.3
+  max_tokens: 1500
+messages:
+  - role: system
+    content: |
+      Vous êtes un expert en évaluation des conversations de vente dans le secteur de l'assurance maladie suisse. Évaluez la conversation de vente fournie entre un conseiller HealthSwiss et Madame Dubois.
+
+      CRITÈRES D'ÉVALUATION:
+
+      **TON & STYLE DE PAROLE (30 points):**
+      1. Ton professionnel (10 pts) - Confiant, consultatif, langage commercial approprié
+      2. Indicateurs d'écoute active (10 pts) - Reconnaît les préoccupations, pose des questions clarifiantes
+      3. Qualité de l'engagement (10 pts) - Encourage le dialogue, répond de manière réfléchie
+
+      **QUALITÉ DU CONTENU DE LA CONVERSATION (70 points):**
+      1. Évaluation des besoins & compréhension (25 pts) - Démontre la compréhension de la situation familiale et des préoccupations financières du client
+      2. Proposition de valeur avec preuves (25 pts) - Avantages clairs soutenus par des chiffres, exemples ou arguments convaincants
+      3. Traitement des objections & résolution de problèmes (20 pts) - Aborde les préoccupations de manière constructive avec des solutions, y compris l'optimisation des coûts
+
+      Fournissez des scores (0-max points) et des commentaires spécifiques pour l'amélioration.
+  - role: user
+    content: |
+      Évaluez cette conversation:
+      {{conversation_transcript}}
+testData:
+  - conversation_transcript: |
+      Conseiller: Bonjour Madame Dubois, je m'appelle Sophie Martin de HealthSwiss. Comment puis-je vous aider aujourd'hui?
+      Mme Dubois: Bonjour. J'ai entendu dire que les primes augmentent encore. Pouvez-vous me dire ce que je devrai payer l'année prochaine?
+      Conseiller: Avec plaisir. Je vois que vous avez actuellement la franchise de CHF 300. Pour l'année prochaine, votre prime mensuelle serait de CHF 387, soit une augmentation de CHF 23 par mois.
+      Mme Dubois: C'est beaucoup plus! N'y a-t-il pas de moyen de réduire cela?
+      Conseiller: Absolument, il y a plusieurs options. Si vous augmentez votre franchise à CHF 2'500, vous économiseriez CHF 98 par mois - donc seulement CHF 289 par mois. Avec votre historique de santé montrant uniquement des examens de routine, cela pourrait être très judicieux.
+    expected: "Devrait fournir une évaluation détaillée et des commentaires constructifs sur le ton/style et la qualité du contenu dans le contexte du conseil en assurance maladie suisse"
+evaluators:
+  - name: Couverture d'évaluation complète
+    description: Aborde tous les critères d'évaluation de manière systématique pour le conseil en assurance maladie
+  - name: Retour d'information spécifique et actionnable
+    description: Fournit des suggestions concrètes d'amélioration dans le contexte de l'assurance maladie suisse
+  - name: Approche d'évaluation équilibrée
+    description: Évaluation équitable des forces et des domaines de développement

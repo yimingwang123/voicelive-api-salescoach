@@ -1,0 +1,52 @@
+name: Évaluation traitement objections changement caisse (FR)
+description: Évaluation du traitement des objections pour le conseil changement de caisse
+model: gpt-4o
+modelParameters:
+  temperature: 0.3
+  max_tokens: 1500
+messages:
+  - role: system
+    content: |
+      Vous êtes un expert en techniques de vente et traitement des objections dans le secteur de l'assurance maladie. Évaluez la conversation fournie entre un conseiller en assurance et Monsieur Moreau, un client sceptique.
+
+      CRITÈRES D'ÉVALUATION:
+
+      **TON & STYLE DE PAROLE (30 points):**
+      1. Établissement de confiance & empathie (10 pts) - Respecte les préoccupations, établit la confiance
+      2. Persistance professionnelle (10 pts) - Reste poliment persistant sans être intrusif
+      3. Authenticité & honnêteté (10 pts) - Paraît crédible, pas de promesses exagérées
+
+      **TRAITEMENT DES OBJECTIONS & PERSUASION (70 points):**
+      1. Prendre les objections au sérieux (20 pts) - Écoute activement, reconnaît les préoccupations comme légitimes
+      2. Réfutation basée sur les faits (25 pts) - Contrecarre les objections avec des faits concrets, chiffres, réglementations
+      3. Argumentation des avantages (25 pts) - Montre des avantages clairs et pertinents pour la situation spécifique du client
+
+      IMPORTANT: Évaluez particulièrement la capacité à gérer les objections suivantes:
+      - Fidélité et satisfaction de longue date
+      - Préoccupations concernant la perte d'assurances complémentaires
+      - Inquiétudes sur les traitements en cours
+      - Méfiance envers les coûts cachés
+      - Problèmes de santé préexistants et possibilités de changement
+
+      Fournissez des évaluations détaillées avec des suggestions d'amélioration spécifiques.
+  - role: user
+    content: |
+      Évaluez cette conversation:
+      {{conversation_transcript}}
+testData:
+  - conversation_transcript: |
+      Conseiller: Bonjour Monsieur Moreau, j'ai vu que vous payez peut-être trop cher pour votre assurance maladie. Puis-je vous montrer comment économiser jusqu'à CHF 150 par mois?
+      M. Moreau: Je suis avec ma caisse depuis 25 ans et très satisfait. Pourquoi changerais-je?
+      Conseiller: Je comprends absolument votre loyauté, c'est tout à votre honneur. Mais saviez-vous que l'assurance de base est identique chez toutes les caisses? C'est fixé par la loi. La seule différence est le prix. Pour la même couverture, vous payez actuellement CHF 520, nous pourrions vous offrir exactement la même couverture pour CHF 370.
+      M. Moreau: Mais qu'en est-il de mon assurance complémentaire? Je la perds en changeant, non?
+      Conseiller: Non, c'est un malentendu fréquent. Vous pouvez changer votre assurance de base et garder votre complémentaire - ce sont deux contrats séparés. Ou nous pouvons aussi examiner votre complémentaire, vous économiserez peut-être là aussi.
+      M. Moreau: Et ma physiothérapie en cours? Y aura-t-il des problèmes?
+      Conseiller: Pas du tout. Pour l'assurance de base, il n'y a pas de délai de carence ni de réserves pour les problèmes de santé préexistants. Vos traitements de physiothérapie continueront sans interruption.
+    expected: "Devrait évaluer la qualité du traitement des objections, en particulier l'empathie, la fidélité aux faits et le pouvoir de persuasion"
+evaluators:
+  - name: Traitement efficace des objections
+    description: Évalue la gestion systématique des objections typiques au changement
+  - name: Établissement de confiance
+    description: Juge la capacité à réduire le scepticisme et à établir la crédibilité
+  - name: Argumentation des avantages
+    description: Évalue la clarté et la pertinence des avantages présentés

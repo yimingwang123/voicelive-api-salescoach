@@ -1,5 +1,5 @@
-name: Contoso SaaS Contract Negotiation Evaluation
-description: Evaluate SaaS contract renewal negotiation conversation quality and effectiveness
+name: Zusatzversicherungs-Beratung Evaluation (DE)
+description: Bewertung der Qualität des Beratungsgesprächs für Zusatzversicherungsszenario
 model: gpt-4o
 modelParameters:
   temperature: 0.3
@@ -7,41 +7,37 @@ modelParameters:
 messages:
   - role: system
     content: |
-      You are an expert sales negotiation evaluator specializing in B2B SaaS contract renewals. Evaluate the provided negotiation between Contoso Enterprise Sales Director and TechCorp CTO.
+      Sie sind ein Experte für die Bewertung von Beratungsgesprächen im Bereich Zusatzversicherungen. Bewerten Sie das vorliegende Gespräch zwischen einem Versicherungsberater und Herrn Schmidt.
       
-      EVALUATION CRITERIA:
+      BEWERTUNGSKRITERIEN:
       
-      **SPEAKING TONE & STYLE (30 points):**
-      1. Professional Demeanor (10 pts) - Calm, confident, collaborative language throughout
-      2. Active Listening Signals (10 pts) - Shows understanding, doesn't interrupt, acknowledges technical concerns
-      3. Collaborative Approach (10 pts) - Uses "we" language, avoids defensiveness, builds partnership
+      **SPRECHWEISE & STIL (30 Punkte):**
+      1. Professioneller & Empathischer Ton (10 Pkt.) - Verständnisvoll, beratend, familienorientiert
+      2. Aktives Zuhören (10 Pkt.) - Geht auf spezifische Familienbedürfnisse ein
+      3. Engagement-Qualität (10 Pkt.) - Erklärt komplex Sachverhalte verständlich
       
-      **CONVERSATION CONTENT QUALITY (70 points):**
-      1. Preparation & Technical Understanding (25 pts) - References performance data, understands client's technical challenges
-      2. Value Articulation & Problem-Solving (25 pts) - Presents platform value clearly, offers technical win-win solutions
-      3. Agreement Building & SLA Clarity (20 pts) - Summarizes technical terms clearly, maintains relationship focus
+      **GESPRÄCHSINHALT-QUALITÄT (70 Punkte):**
+      1. Bedarfsanalyse (25 Pkt.) - Erfasst vollständig familiäre Situation und spezielle Bedürfnisse (Schwangerschaft, Zahnspange, Alternative Medizin)
+      2. Produktempfehlung & Nutzen (25 Pkt.) - Passende Lösungen mit klaren Vorteilen und Kostenangaben
+      3. Transparenz & Vollständigkeit (20 Pkt.) - Erklärt Einschränkungen, Wartefristen, Ausschlüsse ehrlich
       
-      Focus on technical negotiation effectiveness while maintaining relationship integrity.
+      Geben Sie detaillierte Bewertungen und konstruktives Feedback.
   - role: user
     content: |
-      Evaluate this negotiation:
-      {{negotiation_transcript}}
+      Bewerten Sie dieses Gespräch:
+      {{conversation_transcript}}
 testData:
-  - negotiation_transcript: |
-      Contoso Director: Sam, I see we achieved 99.2% uptime, though I know those three incidents were impactful.
-      Sam: Exactly. Those outages cost us customer trust and revenue. We need better than 99.5% SLA going forward.
-      Contoso Director: I understand completely. What if we offer 99.7% SLA with dedicated incident response, plus we'll co-invest in your disaster recovery testing?
-      Sam: That's more like it. What does the incident response timeline look like exactly?
-    expected: "Should evaluate technical negotiation tactics, relationship management, and solution creativity"
+  - conversation_transcript: |
+      Berater: Guten Tag Herr Schmidt, vielen Dank für Ihren Anruf. Sie interessieren sich für Zusatzversicherungen für Ihre Familie?
+      Herr Schmidt: Ja genau. Meine Frau ist schwanger, unser Sohn braucht bald eine Zahnspange, und wir interessieren uns auch für alternative Medizin.
+      Berater: Verstehe. Gratulation zur Schwangerschaft! Für Ihre Situation empfehle ich ein Paket aus drei Komponenten: Erstens unsere Spitalversicherung halbprivat für bessere Geburtsbetreuung. Zweitens die Zahnversicherung für Kinder - die deckt 75% der Zahnspangenkosten bis CHF 10'000. Und drittens unsere Komplementärmedizin-Zusatzversicherung mit CHF 3'000 Deckung pro Jahr.
+      Herr Schmidt: Das klingt gut. Was würde das kosten und können wir trotz Schwangerschaft noch einsteigen?
+      Berater: Das Gesamtpaket kostet etwa CHF 280 pro Monat für die ganze Familie. Bezüglich Schwangerschaft: Für die Spitalversicherung gibt es eine Karenzfrist von 12 Monaten, aber für die kommende Geburt könnten wir eine Einmaldeckung arrangieren.
+    expected: "Sollte die Bedarfserfassung, Lösungsorientierung und Transparenz des Beraters bewerten"
 evaluators:
-  - name: Technical negotiation assessment
-    description: Evaluates understanding of technical requirements and constraints
-  - name: Solution quality evaluation
-    description: Assesses creativity and technical merit of proposed solutions
-  - name: Relationship impact analysis
-    description: Considers long-term partnership implications in tech sector
-    description: Evaluates collaborative vs. adversarial approach
-  - name: Solution quality evaluation
-    description: Assesses creativity and mutual benefit of proposed solutions
-  - name: Relationship impact analysis
-    description: Considers long-term partnership implications
+  - name: Umfassende Bedarfsanalyse
+    description: Bewertet, wie gut der Berater alle familiären Bedürfnisse erfasst hat
+  - name: Produktkenntnis & Relevanz
+    description: Beurteilt Passgenauigkeit der vorgeschlagenen Lösungen
+  - name: Transparenz & Ehrlichkeit
+    description: Bewertet offene Kommunikation über Einschränkungen und Kosten

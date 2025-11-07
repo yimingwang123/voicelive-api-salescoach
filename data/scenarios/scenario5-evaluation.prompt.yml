@@ -1,0 +1,43 @@
+name: Évaluation conseil assurance complémentaire (FR)
+description: Évaluation de la qualité de la conversation pour le scénario d'assurance complémentaire
+model: gpt-4o
+modelParameters:
+  temperature: 0.3
+  max_tokens: 1500
+messages:
+  - role: system
+    content: |
+      Vous êtes un expert en évaluation des conversations de conseil dans le domaine des assurances complémentaires. Évaluez la conversation fournie entre un conseiller en assurance et Monsieur Leroy.
+
+      CRITÈRES D'ÉVALUATION:
+
+      **TON & STYLE DE PAROLE (30 points):**
+      1. Ton professionnel & empathique (10 pts) - Compréhensif, consultatif, orienté famille
+      2. Écoute active (10 pts) - Répond aux besoins familiaux spécifiques
+      3. Qualité de l'engagement (10 pts) - Explique les sujets complexes de manière compréhensible
+
+      **QUALITÉ DU CONTENU DE LA CONVERSATION (70 points):**
+      1. Analyse des besoins (25 pts) - Capture complètement la situation familiale et les besoins spéciaux (grossesse, appareil dentaire, médecine alternative)
+      2. Recommandation produit & avantages (25 pts) - Solutions appropriées avec avantages clairs et informations sur les coûts
+      3. Transparence & exhaustivité (20 pts) - Explique honnêtement les restrictions, délais d'attente, exclusions
+
+      Fournissez des évaluations détaillées et des commentaires constructifs.
+  - role: user
+    content: |
+      Évaluez cette conversation:
+      {{conversation_transcript}}
+testData:
+  - conversation_transcript: |
+      Conseiller: Bonjour Monsieur Leroy, merci pour votre appel. Vous vous intéressez aux assurances complémentaires pour votre famille?
+      M. Leroy: Oui exactement. Ma femme est enceinte, notre fils aura bientôt besoin d'un appareil dentaire, et nous nous intéressons aussi à la médecine alternative.
+      Conseiller: Je comprends. Félicitations pour la grossesse! Pour votre situation, je recommande un forfait de trois composantes: Premièrement, notre assurance hospitalisation semi-privée pour de meilleurs soins à l'accouchement. Deuxièmement, l'assurance dentaire pour enfants - elle couvre 75% des coûts d'appareil dentaire jusqu'à CHF 10'000. Et troisièmement, notre assurance médecine complémentaire avec une couverture de CHF 3'000 par an.
+      M. Leroy: Cela semble bien. Combien cela coûterait-il et pouvons-nous encore souscrire malgré la grossesse?
+      Conseiller: Le forfait complet coûte environ CHF 280 par mois pour toute la famille. Concernant la grossesse: il y a un délai de carence de 12 mois pour l'assurance hospitalisation, mais pour l'accouchement à venir, nous pourrions arranger une couverture unique.
+    expected: "Devrait évaluer la capture des besoins, l'orientation solutions et la transparence du conseiller"
+evaluators:
+  - name: Analyse complète des besoins
+    description: Évalue dans quelle mesure le conseiller a capturé tous les besoins familiaux
+  - name: Connaissance produit & pertinence
+    description: Juge l'adéquation des solutions proposées
+  - name: Transparence & honnêteté
+    description: Évalue la communication ouverte sur les restrictions et les coûts

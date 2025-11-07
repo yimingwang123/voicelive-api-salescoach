@@ -1,5 +1,5 @@
-name: Contoso Manufacturing Equipment Presentation Evaluation
-description: Evaluate automation introduction conversation for traditional manufacturing client
+name: Einwandbehandlung Kassenwechsel Evaluation (DE)
+description: Bewertung der Einwandbehandlung und Überzeugungskraft bei Kassenwechsel-Beratung
 model: gpt-4o
 modelParameters:
   temperature: 0.3
@@ -7,41 +7,46 @@ modelParameters:
 messages:
   - role: system
     content: |
-      You are an expert sales conversation evaluator specializing in industrial automation adoption scenarios for traditional manufacturing clients. Evaluate the provided conversation between Contoso Industrial Rep and SteelWorks Operations Manager.
+      Sie sind ein Experte für Verkaufstechniken und Einwandbehandlung im Krankenkassenbereich. Bewerten Sie das vorliegende Gespräch zwischen einem Versicherungsberater und dem skeptischen Herrn Weber.
       
-      EVALUATION CRITERIA:
+      BEWERTUNGSKRITERIEN:
       
-      **SPEAKING TONE & STYLE (30 points):**
-      1. Educational Approach (10 pts) - Patient, technical but accessible tone without condescension
-      2. Reassuring Communication (10 pts) - Calm tone when addressing automation fears, emphasizes worker support
-      3. Check-in Engagement (10 pts) - Regular understanding checks and invitation for technical questions
+      **SPRECHWEISE & STIL (30 Punkte):**
+      1. Vertrauensbildung & Empathie (10 Pkt.) - Respektiert Bedenken, baut Vertrauen auf
+      2. Professionelle Persistenz (10 Pkt.) - Bleibt höflich hartnäckig ohne aufdringlich zu sein
+      3. Authentizität & Ehrlichkeit (10 Pkt.) - Wirkt glaubwürdig, keine übertriebenen Versprechungen
       
-      **CONVERSATION CONTENT QUALITY (70 points):**
-      1. Operations Assessment & Clear Communication (25 pts) - Understands production challenges, avoids over-technical jargon
-      2. ROI Evidence & Safety Focus (25 pts) - Provides specific efficiency data, addresses worker safety and training
-      3. Implementation Planning & Risk Mitigation (20 pts) - Outlines minimal downtime approach, proposes pilot testing
+      **EINWANDBEHANDLUNG & ÜBERZEUGUNG (70 Punkte):**
+      1. Einwände ernst nehmen (20 Pkt.) - Hört aktiv zu, bestätigt Bedenken als legitim
+      2. Faktenbasierte Widerlegung (25 Pkt.) - Entkräftet Einwände mit konkreten Fakten, Zahlen, Regelungen
+      3. Nutzenargumentation (25 Pkt.) - Zeigt klare, relevante Vorteile für die spezifische Situation des Kunden
       
-      Focus on change management and trust-building with automation-skeptical manufacturing clients.
+      WICHTIG: Bewerten Sie besonders die Fähigkeit, mit den folgenden Einwänden umzugehen:
+      - Langjährige Kundenbindung und Zufriedenheit
+      - Bedenken wegen Verlust von Zusatzversicherungen
+      - Sorgen um laufende Behandlungen
+      - Misstrauen gegenüber versteckten Kosten
+      - Vorerkrankungen und Wechselmöglichkeiten
+      
+      Geben Sie detaillierte Bewertungen mit spezifischen Verbesserungsvorschlägen.
   - role: user
     content: |
-      Evaluate this conversation:
+      Bewerten Sie dieses Gespräch:
       {{conversation_transcript}}
 testData:
   - conversation_transcript: |
-      Contoso Rep: Chris, our system helped similar manufacturers reduce defects by 25% and increase line efficiency 18%.
-      Chris: That sounds impressive, but how much production downtime are we talking about? We can't afford to shut down for weeks.
-      Contoso Rep: I completely understand that concern. We install during your scheduled maintenance windows and provide 24/7 support. Let me show you our phased implementation approach.
-      Chris: What about my quality control team? Are we talking about layoffs here?
-    expected: "Should evaluate technical education approach, safety focus, and practical implementation concern management"
+      Berater: Guten Tag Herr Weber, ich habe gesehen, dass Sie möglicherweise zu viel für Ihre Krankenkasse bezahlen. Darf ich Ihnen zeigen, wie Sie bis zu CHF 150 pro Monat sparen könnten?
+      Herr Weber: Ich bin seit 25 Jahren bei meiner Kasse und sehr zufrieden. Warum sollte ich wechseln?
+      Berater: Ich verstehe Ihre Loyalität absolut, das spricht für Sie. Aber wussten Sie, dass die Grundversicherung bei allen Kassen identisch ist? Es ist gesetzlich festgelegt. Der einzige Unterschied ist der Preis. Bei gleicher Leistung zahlen Sie derzeit CHF 520, wir könnten Ihnen die exakt gleiche Deckung für CHF 370 bieten.
+      Herr Weber: Aber was ist mit meiner Zusatzversicherung? Die verliere ich doch beim Wechsel?
+      Berater: Nein, das ist ein häufiges Missverständnis. Sie können Ihre Grundversicherung wechseln und die Zusatzversicherung behalten - das sind zwei separate Verträge. Oder wir schauen uns auch Ihre Zusatzversicherung an, vielleicht sparen Sie da auch noch.
+      Herr Weber: Und meine laufende Physiotherapie? Gibt es da Probleme?
+      Berater: Überhaupt nicht. Bei der Grundversicherung gibt es keine Karenzfristen und keine Vorbehalte für Vorerkrankungen. Ihre Physiotherapie-Behandlungen laufen nahtlos weiter, ohne Unterbrechung.
+    expected: "Sollte die Qualität der Einwandbehandlung bewerten, insbesondere Empathie, Faktentreue und Überzeugungskraft"
 evaluators:
-  - name: Change management effectiveness
-    description: Assesses approach to overcoming automation adoption resistance in manufacturing
-  - name: Safety and workforce focus
-    description: Evaluates attention to worker concerns and safety improvements
-  - name: Production continuity emphasis
-    description: Addresses operational disruption concerns vs. just technical benefits
-    description: Assesses approach to overcoming technology adoption resistance
-  - name: Trust and credibility building
-    description: Evaluates evidence presentation and support commitment
-  - name: Practical implementation focus
-    description: Addresses real operational concerns vs. just benefits
+  - name: Effektive Einwandbehandlung
+    description: Bewertet systematischen Umgang mit typischen Wechsel-Einwänden
+  - name: Vertrauensbildung
+    description: Beurteilt Fähigkeit, Skepsis abzubauen und Glaubwürdigkeit aufzubauen
+  - name: Nutzenargumentation
+    description: Bewertet Klarheit und Relevanz der präsentierten Vorteile

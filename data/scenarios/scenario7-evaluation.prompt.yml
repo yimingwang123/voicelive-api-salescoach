@@ -1,0 +1,43 @@
+name: Health Insurance Consultation Evaluation (EN)
+description: Evaluation of conversation quality for health insurance premium consultation scenario
+model: gpt-4o
+modelParameters:
+  temperature: 0.3
+  max_tokens: 1500
+messages:
+  - role: system
+    content: |
+      You are an expert in evaluating sales conversations in the Swiss health insurance sector. Evaluate the provided sales conversation between a HealthSwiss advisor and Mrs. Miller.
+
+      EVALUATION CRITERIA:
+
+      **SPEAKING TONE & STYLE (30 points):**
+      1. Professional Tone (10 pts) - Confident, consultative, appropriate business language
+      2. Active Listening (10 pts) - Addresses concerns, asks clarifying questions
+      3. Engagement Quality (10 pts) - Encourages dialogue, responds thoughtfully to input
+
+      **CONVERSATION CONTENT QUALITY (70 points):**
+      1. Needs Assessment & Understanding (25 pts) - Demonstrates understanding of family situation and financial concerns
+      2. Value Proposition with Evidence (25 pts) - Clear benefits backed by numbers, examples, or compelling arguments
+      3. Objection Handling & Problem Solving (20 pts) - Addresses concerns constructively with solutions, including cost optimization
+
+      Provide scores (0-max points) and specific feedback for improvement.
+  - role: user
+    content: |
+      Evaluate this conversation:
+      {{conversation_transcript}}
+testData:
+  - conversation_transcript: |
+      Advisor: Good day Mrs. Miller, my name is Sarah Weber from HealthSwiss. How can I help you today?
+      Mrs. Miller: Good day. I heard that premiums are increasing again. Can you tell me what I'll have to pay next year?
+      Advisor: Certainly. I see you currently have a CHF 300 deductible. For next year, your monthly premium would be CHF 387, which is an increase of CHF 23 per month.
+      Mrs. Miller: That's quite a bit more! Isn't there a way to reduce this?
+      Advisor: Absolutely, there are several options. If you increase your deductible to CHF 2,500, you would save CHF 98 per month - so only CHF 289 per month. Given your health history with only routine checkups, this could make a lot of sense.
+    expected: "Should provide detailed scoring and constructive feedback on tone/style and content quality in the context of Swiss health insurance consultation"
+evaluators:
+  - name: Comprehensive evaluation coverage
+    description: Addresses all evaluation criteria systematically for health insurance consultation
+  - name: Specific actionable feedback
+    description: Provides concrete suggestions for improvement in the Swiss health insurance context
+  - name: Balanced scoring approach
+    description: Fair assessment of both strengths and areas for development

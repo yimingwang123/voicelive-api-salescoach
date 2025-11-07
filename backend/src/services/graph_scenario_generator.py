@@ -6,7 +6,7 @@
 """Graph API scenario generation service."""
 
 import logging
-from typing import Dict, Any, Optional, List
+from typing import Any, Dict, List, Optional
 
 from openai import AzureOpenAI
 
@@ -96,7 +96,9 @@ class GraphScenarioGenerator:
                     "role": "system",
                     "content": (
                         "You are an expert at creating realistic business role-play scenarios for sales training. "
-                        "Generate engaging, professional scenarios that help salespeople prepare for real meetings."
+                        "Generate engaging, professional scenarios where the USER is a Swiss health insurance SELLER "
+                        "and the AI plays the role of a CUSTOMER. "
+                        "Help salespeople prepare for real customer meetings."
                     ),
                 },
                 {"role": "user", "content": prompt},
@@ -112,22 +114,23 @@ class GraphScenarioGenerator:
     def _build_scenario_generation_prompt(self, meetings: List[Dict[str, Any]]) -> str:
         """Build the prompt for OpenAI scenario generation."""
         return (
-            "Generate a role-play scenario to help a salesperson prepare for their upcoming client meetings. "
+            "Generate a role-play scenario to help a Swiss health insurance salesperson prepare for their upcoming client meetings. "
+            "The AI will play the role of the CUSTOMER, and the user will practice as the SELLER.\n\n"
             "Based on their calendar, the following meetings are scheduled:\n\n"
             f"{self._format_meeting_list(meetings)}\n\n"
             "Create a realistic sales practice scenario for an upcoming customer meeting using the following "
             "structure:\n\n"
             "1. **Context**: Start with a quick summary.\n"
-            "2. **Character**: Define the person the trainee will interact with (name, title, company background). "
-            "The company description should include industry, size, and strategic focus.\n"
-            "3. **Behavioral Guidelines (Act Human)**: Outline how the character should behave in conversation "
-            "(e.g., open, skeptical, budget-conscious, visionary).\n"
-            "4. **Character Profile**: Provide background experience and current responsibilities that shape the "
-            "character's perspective.\n"
-            "5. **Key Concerns**: List 2–3 specific business concerns, objections, or challenges the character should "
-            "raise during the conversation. These should be realistic for their role and company context.\n"
-            "6. **Instruction**: End by telling the AI to roleplay as this character, responding naturally and "
-            "professionally, raising concerns where relevant.\n\n"
+            "2. **Character**: Define the CUSTOMER character that the AI will play (name, demographics, background). "
+            "The character should be a potential Swiss health insurance customer.\n"
+            "3. **Behavioral Guidelines (Act Human)**: Outline how the customer character should behave in conversation "
+            "(e.g., price-conscious, concerned about coverage, interested in family plans, skeptical).\n"
+            "4. **Character Profile**: Provide background that shapes the customer's perspective "
+            "(family situation, health history, current insurance status).\n"
+            "5. **Key Concerns**: List 2–3 specific concerns or questions the customer should "
+            "raise during the conversation. These should be realistic for Swiss health insurance customers.\n"
+            "6. **Instruction**: End by telling the AI to roleplay as this customer character, responding naturally "
+            "and raising concerns where relevant.\n\n"
             "**Example output:**\n\n"
             "Discovery call with ContosoCare on SaaS platform.\n\n"
             "You are **Sarah Lee, Director of Patient Experience at ContosoCare**, a healthcare provider focused on "

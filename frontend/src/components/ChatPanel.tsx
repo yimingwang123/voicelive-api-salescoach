@@ -4,17 +4,17 @@
  *--------------------------------------------------------------------------------------------*/
 
 import {
-  Card,
-  Button,
-  Text,
-  makeStyles,
-  tokens,
+    Button,
+    Card,
+    Text,
+    makeStyles,
+    tokens,
 } from '@fluentui/react-components'
 import {
-  MicRegular,
-  MicOffRegular,
-  DeleteRegular,
-  ChartMultipleRegular,
+    ChartMultipleRegular,
+    DeleteRegular,
+    MicOffRegular,
+    MicRegular,
 } from '@fluentui/react-icons'
 import { Message, Scenario } from '../types'
 
@@ -120,6 +120,9 @@ export function ChatPanel({
             </Text>
             <Text size={200}>
               Click "Start Recording" to begin the conversation.
+            </Text>
+            <Text size={200} style={{ marginTop: '8px', fontStyle: 'italic' }}>
+              You are the insurance seller. The AI will play the customer role.
             </Text>
           </div>
         ) : (
