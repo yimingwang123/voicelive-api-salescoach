@@ -203,7 +203,7 @@ def audio_processor():
 def voice_proxy(ws: simple_websocket.ws.Server):
     """WebSocket endpoint for voice proxy."""
 
-    logger.info("New WebSocket connection")
+    logger.info("New WebSocket connection established")
 
     try:
         loop = asyncio.get_event_loop()
@@ -211,7 +211,11 @@ def voice_proxy(ws: simple_websocket.ws.Server):
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
 
-    loop.run_until_complete(voice_proxy_handler.handle_connection(ws))
+    try:
+        loop.run_until_complete(voice_proxy_handler.handle_connection(ws))
+    except Exception as e:
+        logger.error("WebSocket error: %s", e, exc_info=True)
+        raise
 
 
 @app.route(API_GRAPH_SCENARIO_ENDPOINT, methods=["POST"])
