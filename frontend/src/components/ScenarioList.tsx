@@ -35,14 +35,10 @@ const useStyles = makeStyles({
     marginBottom: tokens.spacingVerticalS,
   },
   gridContainer: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-    gap: tokens.spacingHorizontalM,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: tokens.spacingVerticalS,
     width: '100%',
-    '@media (max-width: 768px)': {
-      gridTemplateColumns: '1fr',
-      gap: tokens.spacingHorizontalM,
-    },
   },
   card: {
     cursor: 'pointer',
