@@ -86,5 +86,13 @@
     "python.testing.unittestEnabled": false,
     "python.experiments.optOutFrom": [
         "pythonTerminalEnvVarActivation"
-    ]
+    ],
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/.hg/store/**": true,
+        "**/.git/**": true,
+        "**/node_modules/**": true,
+        "**/.vscode/**": true
+    }
 }
