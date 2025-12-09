@@ -48,15 +48,19 @@ Real-time AI-powered sales training platform using Azure Voice Live API. Trainee
 
 ---
 
-## Azure Voice Live API Integration
-
-### Connection Architecture
+## Voice Live API Connection
 
 ![alt text](image-3.png)
 
-### Voice Live API Configuration Details
+**WebSocket URL:**
+```
+wss://{resource}.cognitiveservices.azure.com/voice-agent/realtime
+?api-version=2025-05-01-preview
+&x-ms-client-request-id={uuid}
+&model=gpt-4o  (for local agents)
+```
 
-The backend configures the Azure Voice Live API with specific parameters to ensure optimal real-time voice interaction:
+**Session Configuration:**
 
 ```python
 # Located in: backend/src/services/websocket_handler.py
