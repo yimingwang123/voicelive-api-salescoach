@@ -7,20 +7,20 @@ modelParameters:
 messages:
   - role: system
     content: |
-      Sie sind ein Experte für die Bewertung von Beratungsgesprächen im Bereich Zusatzversicherungen. Bewerten Sie das vorliegende Gespräch zwischen einem Versicherungsberater und Herrn Schmidt.
-      
+      Sie sind ein Experte für die Bewertung von Beratungsgesprächen im Bereich Zusatzversicherungen. Bewerten Sie das vorliegende Gespräch zwischen einem Versicherungsberater und Frau Schmidt.
+
       BEWERTUNGSKRITERIEN:
-      
+
       **SPRECHWEISE & STIL (30 Punkte):**
       1. Professioneller & Empathischer Ton (10 Pkt.) - Verständnisvoll, beratend, familienorientiert
       2. Aktives Zuhören (10 Pkt.) - Geht auf spezifische Familienbedürfnisse ein
       3. Engagement-Qualität (10 Pkt.) - Erklärt komplex Sachverhalte verständlich
-      
+
       **GESPRÄCHSINHALT-QUALITÄT (70 Punkte):**
       1. Bedarfsanalyse (25 Pkt.) - Erfasst vollständig familiäre Situation und spezielle Bedürfnisse (Schwangerschaft, Zahnspange, Alternative Medizin)
       2. Produktempfehlung & Nutzen (25 Pkt.) - Passende Lösungen mit klaren Vorteilen und Kostenangaben
       3. Transparenz & Vollständigkeit (20 Pkt.) - Erklärt Einschränkungen, Wartefristen, Ausschlüsse ehrlich
-      
+
       Geben Sie detaillierte Bewertungen und konstruktives Feedback.
   - role: user
     content: |
@@ -28,10 +28,10 @@ messages:
       {{conversation_transcript}}
 testData:
   - conversation_transcript: |
-      Berater: Guten Tag Herr Schmidt, vielen Dank für Ihren Anruf. Sie interessieren sich für Zusatzversicherungen für Ihre Familie?
-      Herr Schmidt: Ja genau. Meine Frau ist schwanger, unser Sohn braucht bald eine Zahnspange, und wir interessieren uns auch für alternative Medizin.
+      Berater: Guten Tag Frau Schmidt, vielen Dank für Ihren Anruf. Sie interessieren sich für Zusatzversicherungen für Ihre Familie?
+      Frau Schmidt: Ja genau. Ich bin schwanger, unser Sohn braucht bald eine Zahnspange, und wir interessieren uns auch für alternative Medizin.
       Berater: Verstehe. Gratulation zur Schwangerschaft! Für Ihre Situation empfehle ich ein Paket aus drei Komponenten: Erstens unsere Spitalversicherung halbprivat für bessere Geburtsbetreuung. Zweitens die Zahnversicherung für Kinder - die deckt 75% der Zahnspangenkosten bis CHF 10'000. Und drittens unsere Komplementärmedizin-Zusatzversicherung mit CHF 3'000 Deckung pro Jahr.
-      Herr Schmidt: Das klingt gut. Was würde das kosten und können wir trotz Schwangerschaft noch einsteigen?
+      Frau Schmidt: Das klingt gut. Was würde das kosten und können wir trotz Schwangerschaft noch einsteigen?
       Berater: Das Gesamtpaket kostet etwa CHF 280 pro Monat für die ganze Familie. Bezüglich Schwangerschaft: Für die Spitalversicherung gibt es eine Karenzfrist von 12 Monaten, aber für die kommende Geburt könnten wir eine Einmaldeckung arrangieren.
     expected: "Sollte die Bedarfserfassung, Lösungsorientierung und Transparenz des Beraters bewerten"
 evaluators:

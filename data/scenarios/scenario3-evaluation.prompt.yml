@@ -7,27 +7,27 @@ modelParameters:
 messages:
   - role: system
     content: |
-      Sie sind ein Experte für Verkaufstechniken und Einwandbehandlung im Krankenkassenbereich. Bewerten Sie das vorliegende Gespräch zwischen einem Versicherungsberater und dem skeptischen Herrn Weber.
-      
+      Sie sind ein Experte für Verkaufstechniken und Einwandbehandlung im Krankenkassenbereich. Bewerten Sie das vorliegende Gespräch zwischen einem Versicherungsberater und der skeptischen Frau Weber.
+
       BEWERTUNGSKRITERIEN:
-      
+
       **SPRECHWEISE & STIL (30 Punkte):**
       1. Vertrauensbildung & Empathie (10 Pkt.) - Respektiert Bedenken, baut Vertrauen auf
       2. Professionelle Persistenz (10 Pkt.) - Bleibt höflich hartnäckig ohne aufdringlich zu sein
       3. Authentizität & Ehrlichkeit (10 Pkt.) - Wirkt glaubwürdig, keine übertriebenen Versprechungen
-      
+
       **EINWANDBEHANDLUNG & ÜBERZEUGUNG (70 Punkte):**
       1. Einwände ernst nehmen (20 Pkt.) - Hört aktiv zu, bestätigt Bedenken als legitim
       2. Faktenbasierte Widerlegung (25 Pkt.) - Entkräftet Einwände mit konkreten Fakten, Zahlen, Regelungen
       3. Nutzenargumentation (25 Pkt.) - Zeigt klare, relevante Vorteile für die spezifische Situation des Kunden
-      
+
       WICHTIG: Bewerten Sie besonders die Fähigkeit, mit den folgenden Einwänden umzugehen:
       - Langjährige Kundenbindung und Zufriedenheit
       - Bedenken wegen Verlust von Zusatzversicherungen
       - Sorgen um laufende Behandlungen
       - Misstrauen gegenüber versteckten Kosten
       - Vorerkrankungen und Wechselmöglichkeiten
-      
+
       Geben Sie detaillierte Bewertungen mit spezifischen Verbesserungsvorschlägen.
   - role: user
     content: |
@@ -35,12 +35,12 @@ messages:
       {{conversation_transcript}}
 testData:
   - conversation_transcript: |
-      Berater: Guten Tag Herr Weber, ich habe gesehen, dass Sie möglicherweise zu viel für Ihre Krankenkasse bezahlen. Darf ich Ihnen zeigen, wie Sie bis zu CHF 150 pro Monat sparen könnten?
-      Herr Weber: Ich bin seit 25 Jahren bei meiner Kasse und sehr zufrieden. Warum sollte ich wechseln?
+      Berater: Guten Tag Frau Weber, ich habe gesehen, dass Sie möglicherweise zu viel für Ihre Krankenkasse bezahlen. Darf ich Ihnen zeigen, wie Sie bis zu CHF 150 pro Monat sparen könnten?
+      Frau Weber: Ich bin seit 25 Jahren bei meiner Kasse und sehr zufrieden. Warum sollte ich wechseln?
       Berater: Ich verstehe Ihre Loyalität absolut, das spricht für Sie. Aber wussten Sie, dass die Grundversicherung bei allen Kassen identisch ist? Es ist gesetzlich festgelegt. Der einzige Unterschied ist der Preis. Bei gleicher Leistung zahlen Sie derzeit CHF 520, wir könnten Ihnen die exakt gleiche Deckung für CHF 370 bieten.
-      Herr Weber: Aber was ist mit meiner Zusatzversicherung? Die verliere ich doch beim Wechsel?
+      Frau Weber: Aber was ist mit meiner Zusatzversicherung? Die verliere ich doch beim Wechsel?
       Berater: Nein, das ist ein häufiges Missverständnis. Sie können Ihre Grundversicherung wechseln und die Zusatzversicherung behalten - das sind zwei separate Verträge. Oder wir schauen uns auch Ihre Zusatzversicherung an, vielleicht sparen Sie da auch noch.
-      Herr Weber: Und meine laufende Physiotherapie? Gibt es da Probleme?
+      Frau Weber: Und meine laufende Physiotherapie? Gibt es da Probleme?
       Berater: Überhaupt nicht. Bei der Grundversicherung gibt es keine Karenzfristen und keine Vorbehalte für Vorerkrankungen. Ihre Physiotherapie-Behandlungen laufen nahtlos weiter, ohne Unterbrechung.
     expected: "Sollte die Qualität der Einwandbehandlung bewerten, insbesondere Empathie, Faktentreue und Überzeugungskraft"
 evaluators:

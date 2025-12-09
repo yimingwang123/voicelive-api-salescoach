@@ -4,40 +4,44 @@
  *--------------------------------------------------------------------------------------------*/
 
 import {
-  Dialog,
-  DialogSurface,
-  DialogTitle,
-  DialogBody,
-  DialogActions,
+  Badge,
   Button,
   Card,
   CardHeader,
-  Text,
-  ProgressBar,
-  Badge,
+  Dialog,
+  DialogActions,
+  DialogBody,
+  DialogSurface,
+  DialogTitle,
   makeStyles,
-  tokens,
-  TabList,
+  ProgressBar,
   Tab,
+  TabList,
   TabValue,
+  Text,
+  tokens,
 } from '@fluentui/react-components'
-import { Assessment } from '../types'
 import { useState } from 'react'
+import { Assessment } from '../types'
 
 const useStyles = makeStyles({
   dialogBody: {
-    padding: tokens.spacingVerticalL,
+    padding: '0',
     display: 'flex',
     flexDirection: 'column',
-    gap: tokens.spacingVerticalL,
+    height: 'calc(90vh - 180px)', // Account for header and footer
+    overflow: 'hidden',
   },
   headerBar: {
     backgroundColor: tokens.colorNeutralBackground2,
     borderRadius: tokens.borderRadiusLarge,
     padding: tokens.spacingVerticalL,
+    margin: tokens.spacingVerticalL,
+    marginBottom: '0',
     display: 'flex',
     flexDirection: 'column',
     gap: tokens.spacingVerticalS,
+    flexShrink: 0,
   },
   scoreRow: {
     display: 'flex',
@@ -50,19 +54,27 @@ const useStyles = makeStyles({
     fontWeight: 700,
   },
   tabs: {
-    // Remove margins to let the parent container handle spacing
+    paddingLeft: tokens.spacingVerticalL,
+    paddingRight: tokens.spacingVerticalL,
+    paddingTop: tokens.spacingVerticalL,
+    flexShrink: 0,
   },
   grid: {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
     gap: tokens.spacingHorizontalL,
+    flexShrink: 0,
   },
   card: {
     padding: tokens.spacingVerticalL,
     height: 'fit-content',
+    minWidth: 0, // Prevent overflow
   },
   tabContent: {
-    minHeight: '400px',
+    flex: 1,
+    overflowY: 'auto',
+    overflowX: 'hidden',
+    padding: tokens.spacingVerticalL,
   },
   sectionTitle: {
     marginBottom: tokens.spacingVerticalM,
@@ -80,6 +92,8 @@ const useStyles = makeStyles({
   },
   feedbackCard: {
     padding: tokens.spacingVerticalL,
+    minWidth: 0, // Prevent overflow
+    width: '100%',
   },
   feedbackSection: {
     marginBottom: tokens.spacingVerticalXL,
@@ -123,6 +137,8 @@ const useStyles = makeStyles({
   feedbackText: {
     lineHeight: 1.6,
     fontSize: '14px',
+    wordWrap: 'break-word',
+    overflowWrap: 'break-word',
   },
   noContent: {
     textAlign: 'center',
@@ -207,7 +223,8 @@ export function AssessmentPanel({ open, assessment, onClose }: Props) {
 
           {/* Content Section */}
           {tab === 'overview' && (
-            <div className={styles.grid}>
+            <div className={styles.tabContent}>
+              <div className={styles.grid}>
               {assessment.ai_assessment && (
                 <Card className={styles.card}>
                   <CardHeader
@@ -426,9 +443,11 @@ export function AssessmentPanel({ open, assessment, onClose }: Props) {
                 </Card>
               )}
             </div>
+            </div>
           )}
 
           {tab === 'recommendations' && assessment.ai_assessment && (
+            <div className={styles.tabContent}>
             <Card className={styles.feedbackCard}>
               <CardHeader
                 header={
@@ -492,9 +511,11 @@ export function AssessmentPanel({ open, assessment, onClose }: Props) {
                 )}
               </div>
             </Card>
+            </div>
           )}
 
           {tab === 'notes' && (
+            <div className={styles.tabContent}>
             <Card className={styles.card}>
               <CardHeader
                 header={
@@ -508,6 +529,7 @@ export function AssessmentPanel({ open, assessment, onClose }: Props) {
                   'No evaluator notes available.'}
               </Text>
             </Card>
+            </div>
           )}
         </DialogBody>
         <DialogActions>

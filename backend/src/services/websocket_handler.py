@@ -9,9 +9,8 @@ import asyncio
 import json
 import logging
 import uuid
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Protocol
 
-import simple_websocket.ws  # pyright: ignore[reportMissingTypeStubs]
 import websockets
 import websockets.asyncio.client
 
@@ -19,6 +18,27 @@ from src.config import config
 from src.services.managers import AgentManager
 
 logger = logging.getLogger(__name__)
+
+
+class WebSocketInterface(Protocol):
+    """Protocol for WebSocket objects."""
+
+    def send(self, message: str) -> None:
+        """Send a message."""
+        ...
+
+    def receive(self, timeout: Optional[float] = None) -> Optional[str]:
+        """Receive a message."""
+        ...
+
+    @property
+    def connected(self) -> bool:
+        """Check if connected."""
+        ...
+
+    def close(self) -> None:
+        """Close the connection."""
+        ...
 
 # WebSocket constants
 AZURE_VOICE_API_VERSION = "2025-05-01-preview"
@@ -56,7 +76,7 @@ class VoiceProxyHandler:
         """
         self.agent_manager = agent_manager
 
-    async def handle_connection(self, client_ws: simple_websocket.ws.Server) -> None:
+    async def handle_connection(self, client_ws: WebSocketInterface) -> None:
         """
         Handle a WebSocket connection from a client.
 
@@ -90,7 +110,7 @@ class VoiceProxyHandler:
             if azure_ws:
                 await azure_ws.close()
 
-    async def _get_agent_id_from_client(self, client_ws: simple_websocket.ws.Server) -> Optional[str]:
+    async def _get_agent_id_from_client(self, client_ws: WebSocketInterface) -> Optional[str]:
         """Get agent ID from initial client message."""
 
         try:
@@ -205,7 +225,7 @@ class VoiceProxyHandler:
 
     async def _handle_message_forwarding(
         self,
-        client_ws: simple_websocket.ws.Server,
+        client_ws: WebSocketInterface,
         azure_ws: websockets.asyncio.client.ClientConnection,
     ) -> None:
         """Handle bidirectional message forwarding."""
@@ -221,7 +241,7 @@ class VoiceProxyHandler:
 
     async def _forward_client_to_azure(
         self,
-        client_ws: simple_websocket.ws.Server,
+        client_ws: WebSocketInterface,
         azure_ws: websockets.asyncio.client.ClientConnection,
     ) -> None:
         """Forward messages from client to Azure."""
@@ -241,7 +261,7 @@ class VoiceProxyHandler:
     async def _forward_azure_to_client(
         self,
         azure_ws: websockets.asyncio.client.ClientConnection,
-        client_ws: simple_websocket.ws.Server,
+        client_ws: WebSocketInterface,
     ) -> None:
         """Forward messages from Azure to client."""
         try:
@@ -255,7 +275,7 @@ class VoiceProxyHandler:
         except Exception:
             logger.debug("Client connection closed during forwarding")
 
-    async def _send_message(self, ws: simple_websocket.ws.Server, message: Dict[str, str | Dict[str, str]]) -> None:
+    async def _send_message(self, ws: WebSocketInterface, message: Dict[str, str | Dict[str, str]]) -> None:
         """Send a JSON message to a WebSocket."""
         try:
             await asyncio.get_event_loop().run_in_executor(
@@ -266,6 +286,6 @@ class VoiceProxyHandler:
         except Exception:
             pass
 
-    async def _send_error(self, ws: simple_websocket.ws.Server, error_message: str) -> None:
+    async def _send_error(self, ws: WebSocketInterface, error_message: str) -> None:
         """Send an error message to a WebSocket."""
         await self._send_message(ws, {"type": "error", "error": {"message": error_message}})

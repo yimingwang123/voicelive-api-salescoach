@@ -73,6 +73,20 @@ def index():
     return send_from_directory(app.static_folder, INDEX_FILE)
 
 
+@app.route("/favicon.ico")
+def favicon():
+    """Serve favicon or return 204 No Content if not found."""
+    if app.static_folder is None:
+        return "", 204
+    # Try to serve favicon.ico if it exists, otherwise return 204 No Content
+    from pathlib import Path
+
+    favicon_path = Path(app.static_folder) / "favicon.ico"
+    if favicon_path.exists():
+        return send_from_directory(app.static_folder, "favicon.ico")
+    return "", 204
+
+
 @app.route(API_CONFIG_ENDPOINT)
 def get_config():
     """Get client configuration."""

@@ -57,4 +57,5 @@ EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:8000/api/config || exit 1
 
+# Run the application using Flask development server
 CMD ["python", "src/app.py"]

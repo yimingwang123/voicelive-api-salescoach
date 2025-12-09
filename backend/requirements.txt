@@ -1,9 +1,14 @@
 azure-ai-projects>=1.0.0
 azure-cognitiveservices-speech==1.45.0
 azure-identity>=1.15.0
-flask==3.1.2
+flask==3.1.0
 flask-sock==0.7.0
+flask-cors==5.0.0
+python-dotenv==1.0.1
+pydantic==2.10.3
+pydantic-settings==2.6.1
+requests==2.32.3
+websockets==14.1
 openai==1.102.0
-python-dotenv==1.1.1
 pyyaml==6.0.2
-websockets==15.0.1
+azure-monitor-opentelemetry==1.6.4

@@ -378,6 +378,10 @@ class PronunciationAssessor:
         result: speechsdk.SpeechRecognitionResult,
     ) -> Dict[str, Any]:
         """Build the final assessment result."""
+        # Check if we got valid results
+        if pronunciation_result.accuracy_score == 0 and pronunciation_result.fluency_score == 0:
+            logger.warning("Pronunciation assessment returned zero scores - audio may be invalid or too short")
+            
         return {
             "accuracy_score": pronunciation_result.accuracy_score,
             "fluency_score": pronunciation_result.fluency_score,
@@ -452,6 +456,16 @@ class PronunciationAssessor:
         pronunciation_config.apply_to(speech_recognizer)
 
         result = await asyncio.get_event_loop().run_in_executor(None, speech_recognizer.recognize_once)
+
+        # Log recognition result status
+        logger.info("Speech recognition result reason: %s", result.reason)
+        if result.reason == speechsdk.ResultReason.RecognizedSpeech:
+            logger.info("Recognized text: %s", result.text)
+        elif result.reason == speechsdk.ResultReason.NoMatch:
+            logger.warning("No speech could be recognized from audio")
+        elif result.reason == speechsdk.ResultReason.Canceled:
+            cancellation_details = speechsdk.CancellationDetails(result)
+            logger.error("Speech recognition canceled: %s - %s", cancellation_details.reason, cancellation_details.error_details)
 
         pronunciation_result = speechsdk.PronunciationAssessmentResult(result)
         return self._build_assessment_result(pronunciation_result, result)

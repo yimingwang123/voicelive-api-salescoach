@@ -4,14 +4,13 @@
  *--------------------------------------------------------------------------------------------*/
 
 import {
-  Button,
-  Card,
-  Spinner,
-  Tab,
-  TabList,
-  Text,
-  makeStyles,
-  tokens,
+    Button,
+    Spinner,
+    Tab,
+    TabList,
+    Text,
+    makeStyles,
+    tokens
 } from '@fluentui/react-components'
 import { useState } from 'react'
 import { api } from '../services/api'
@@ -23,27 +22,35 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     gap: tokens.spacingVerticalM,
     width: '100%',
-    padding: tokens.spacingVerticalL,
+    padding: `${tokens.spacingVerticalXL} 0`,
   },
   header: {
     fontSize: '22px',
     fontWeight: tokens.fontWeightSemibold,
     marginBottom: tokens.spacingVerticalS,
     color: tokens.colorNeutralForeground1,
+    paddingLeft: tokens.spacingHorizontalL,
+    paddingRight: tokens.spacingHorizontalL,
   },
   tabList: {
     marginBottom: tokens.spacingVerticalS,
+    paddingLeft: tokens.spacingHorizontalL,
+    paddingRight: tokens.spacingHorizontalL,
   },
   gridContainer: {
     display: 'flex',
     flexDirection: 'column',
-    gap: tokens.spacingVerticalS,
+    gap: tokens.spacingVerticalM,
     width: '100%',
+    paddingLeft: tokens.spacingHorizontalL,
+    paddingRight: tokens.spacingHorizontalL,
   },
   card: {
     cursor: 'pointer',
     transition: 'all 0.2s ease-in-out',
     minHeight: '120px',
+    width: '100%',
+    maxWidth: '100%',
     padding: tokens.spacingVerticalM,
     border: `1px solid ${tokens.colorNeutralStroke1}`,
     borderRadius: tokens.borderRadiusLarge,
@@ -78,6 +85,8 @@ const useStyles = makeStyles({
     justifyContent: 'flex-end',
     marginTop: tokens.spacingVerticalM,
     paddingTop: tokens.spacingVerticalM,
+    paddingLeft: tokens.spacingHorizontalL,
+    paddingRight: tokens.spacingHorizontalL,
     borderTop: `1px solid ${tokens.colorNeutralStroke2}`,
   },
   loadingCard: {
@@ -86,11 +95,14 @@ const useStyles = makeStyles({
     alignItems: 'center',
     justifyContent: 'center',
     minHeight: '120px',
+    width: '100%',
+    maxWidth: '100%',
     textAlign: 'center',
     gap: tokens.spacingVerticalS,
     padding: tokens.spacingVerticalM,
     border: `1px dashed ${tokens.colorNeutralStroke2}`,
     borderRadius: tokens.borderRadiusLarge,
+    backgroundColor: tokens.colorNeutralBackground1,
   },
   emptyState: {
     textAlign: 'center',
@@ -165,19 +177,17 @@ export function ScenarioList({
 
     if (isGraphLoading) {
       return (
-        <Card key="graph-loading" className={styles.card}>
-          <div className={styles.loadingCard}>
-            <Spinner size="medium" />
-            <Text size={300}>
-              Analyzing your calendar and generating personalized scenario...
-            </Text>
-          </div>
-        </Card>
+        <div key="graph-loading" className={styles.loadingCard}>
+          <Spinner size="medium" />
+          <Text size={300}>
+            Analyzing your calendar and generating personalized scenario...
+          </Text>
+        </div>
       )
     }
 
     return (
-      <Card
+      <div
         key={scenario.id}
         className={`${styles.card} ${isSelected ? styles.selected : ''}`}
         onClick={() => handleScenarioClick(scenario)}
@@ -190,7 +200,7 @@ export function ScenarioList({
             {scenario.description}
           </Text>
         </div>
-      </Card>
+      </div>
     )
   }
 
@@ -216,7 +226,7 @@ export function ScenarioList({
       <Text className={styles.header}>
         Select Training Scenario
       </Text>
-      <Text size={200} style={{ marginBottom: '8px', color: tokens.colorNeutralForeground3 }}>
+      <Text size={200} style={{ marginBottom: '8px', color: tokens.colorNeutralForeground3, paddingLeft: tokens.spacingHorizontalL, paddingRight: tokens.spacingHorizontalL }}>
         You are the Swiss health insurance seller. Practice your sales skills with AI-powered customers.
       </Text>
 
