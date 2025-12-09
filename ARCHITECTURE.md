@@ -1,58 +1,50 @@
-# VoiceLive API Sales Coach - Architecture Documentation
+# VoiceLive API Sales Coach - Architecture
 
-## Table of Contents
-1. [System Overview](#system-overview)
-2. [High-Level Architecture](#high-level-architecture)
-3. [Component Architecture](#component-architecture)
-4. [Azure Voice Live API Integration](#azure-voice-live-api-integration)
-5. [Audio Stream Processing](#audio-stream-processing)
-6. [Agent Creation and Management](#agent-creation-and-management)
-7. [Conversation Analysis System](#conversation-analysis-system)
-8. [Data Flow Diagrams](#data-flow-diagrams)
-9. [Security and Authentication](#security-and-authentication)
-10. [Deployment Architecture](#deployment-architecture)
+## Overview
 
----
+Real-time AI-powered sales training platform using Azure Voice Live API. Trainees practice conversations with AI-powered virtual customers that respond naturally via voice.
 
-## System Overview
-
-The **VoiceLive API Sales Coach** is a real-time AI-powered training platform designed for sales professionals. It leverages Azure's Voice Live API to create realistic voice-based role-playing scenarios where trainees practice sales conversations with AI-powered virtual customers.
-
-### Key Capabilities
-- **Real-time voice conversations** with AI customers using Azure Voice Live API
-- **Multiple training scenarios** (pre-defined and AI-generated from Microsoft Graph)
-- **Automated conversation analysis** with performance scoring
-- **Pronunciation assessment** using Azure Speech Services
-- **WebSocket-based bidirectional audio streaming**
-- **Avatar support** for visual engagement
+**Core Technologies:**
+- **Azure Voice Live API** - Real-time voice conversations
+- **Azure OpenAI (GPT-4o)** - AI customer responses
+- **React + TypeScript** - Frontend
+- **Python Flask** - Backend WebSocket proxy
+- **Azure Speech Services** - Pronunciation assessment
 
 ---
 
-## High-Level Architecture
+## Architecture
 
 ![alt text](image.png)
 
+**Key Flow:**
+1. Frontend connects to Flask backend via WebSocket
+2. Backend proxies to Azure Voice Live API
+3. Audio streams bidirectionally in real-time
+4. AI generates natural voice responses
+5. Post-conversation analysis via Azure OpenAI
 
 ---
 
-## Component Architecture
+## Components
 
-### Frontend Components
-
+### Frontend
 ![alt text](image-1.png)
 
-**Key Frontend Responsibilities:**
-- **ScenarioList**: Display available training scenarios
-- **ChatPanel**: Show real-time conversation transcripts
-- **VideoPanel**: Display AI avatar (if enabled)
-- **AssessmentPanel**: Show performance analysis results
-- **useRealtime**: Manage WebSocket connection and real-time message handling
-- **useRecorder**: Capture microphone audio and stream to backend
-- **useAudioPlayer**: Play AI response audio chunks
+- **useRealtime** - WebSocket connection manager
+- **useRecorder** - Microphone audio capture (24kHz PCM)
+- **useAudioPlayer** - Plays AI audio responses
+- **ChatPanel** - Real-time transcripts
+- **AssessmentPanel** - Performance scores
 
-### Backend Components
-
+### Backend
 ![alt text](image-2.png)
+
+- **VoiceProxyHandler** - WebSocket proxy (client ↔ Azure)
+- **AgentManager** - Creates local or Azure AI agents
+- **ScenarioManager** - Loads training scenarios from YAML
+- **ConversationAnalyzer** - Evaluates performance (Azure OpenAI)
+- **PronunciationAssessor** - Speech quality scoring
 
 ---
 
